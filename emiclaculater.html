@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMI Calculator</title>
+  <link rel="stylesheet" href="https://pyscript.net/releases/2025.8.1/core.css">
+  <script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+    <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)),
+                  url("backgrounds/calculater background.jpeg") no-repeat center center fixed;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+         
+    }
+    .container {
+      display: flex;
+      margin-top: 40px;
+      background: #1b2735;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      overflow: hidden;
+    }
+    .sliders {
+      padding: 30px;
+      width: 400px;
+    }
+    .sliders h2 {
+      text-align: left;
+      margin-bottom: 20px;
+      color: #64b5f6;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+    }
+    input[type="range"] {
+      width: 100%;
+    }
+    .value {
+      font-weight: bold;
+      color: #81c784;
+    }
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      margin-top: 2px;
+      color: #bbb;
+    }
+    .results {
+      background: #0f141b;
+      padding: 30px;
+      min-width: 250px;
+      color: #64b5f6;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .results h3 {
+      margin-bottom: 15px;
+      text-align: center;
+      color: #81c784;
+    }
+    .results p {
+      margin: 10px 0;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sliders Section -->
+    <div class="sliders">
+      <h2>🏦 Loan EMI Calculator</h2>
+
+      <label>Loan Amount: <span id="loanAmountVal" class="value">1000000</span></label>
+      <input type="range" id="loanAmount" min="50000" max="20000000" step="10000" value="1000000" py-change="calculate_emi">
+      <div class="slider-labels">
+        <span>50K</span>
+        <span>2 Cr</span>
+      </div>
+
+      <label>Loan Tenure (Years): <span id="loanTenureVal" class="value">10</span></label>
+      <input type="range" id="loanTenure" min="1" max="30" value="10" py-change="calculate_emi">
+      <div class="slider-labels">
+        <span>1 Yr</span>
+        <span>30 Yrs</span>
+      </div>
+
+      <label>Interest Rate (%): <span id="interestRateVal" class="value">8.5</span></label>
+      <input type="range" id="interestRate" min="5" max="15" step="0.1" value="8.5" py-change="calculate_emi">
+      <div class="slider-labels">
+        <span>5%</span>
+        <span>15%</span>
+      </div>
+    </div>
+
+    <!-- Results Section -->
+    <div class="results" id="resultBox">
+      <h3>Detailed Calculations</h3>
+      <p>📌 EMI: <span id="emiVal">0</span></p>
+      <p>💰 Total Interest: <span id="interestVal">0</span></p>
+      <p>🏦 Total Payment: <span id="paymentVal">0</span></p>
+    </div>
+  </div>
+
+  <py-script>
+def calculate_emi(event=None):
+    import js
+    P = float(js.document.getElementById("loanAmount").value)
+    years = int(js.document.getElementById("loanTenure").value)
+    rate = float(js.document.getElementById("interestRate").value)
+
+    # Update labels
+    js.document.getElementById("loanAmountVal").innerText = f"{int(P):,}"
+    js.document.getElementById("loanTenureVal").innerText = str(years)
+    js.document.getElementById("interestRateVal").innerText = str(rate)
+
+    # EMI Calculation
+    N = years * 12
+    R = rate / (12*100)
+    EMI = (P * R * (1+R)**N) / ((1+R)**N - 1)
+    total_payment = EMI * N
+    total_interest = total_payment - P
+
+    # Update Results
+    js.document.getElementById("emiVal").innerText = f"₹{EMI:,.2f}"
+    js.document.getElementById("interestVal").innerText = f"₹{total_interest:,.2f}"
+    js.document.getElementById("paymentVal").innerText = f"₹{total_payment:,.2f}"
+
+# Run once initially
+calculate_emi()
+  </py-script>
+</body>
+</html>

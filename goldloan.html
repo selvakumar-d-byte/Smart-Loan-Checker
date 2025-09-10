@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Loan Checker - Gold Loan</title>
+  <link rel="stylesheet" href="https://pyscript.net/releases/2025.8.1/core.css">
+  <script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+    <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      background: url("eligibility background.png") no-repeat center center fixed;
+      background-size: cover;
+      color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding-top: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: gray;
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      padding: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      z-index: 1000;
+    }
+    .container {
+      background: rgba(30,30,30,0.9);
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.8);
+      width: 420px;
+      max-width: 95%;
+      box-shadow: 0 0 25px rgba(0, 136, 248, 0.7), 0 0 45px rgba(46, 125, 50, 0.4);
+      transition: 0.4s ease;
+    }
+
+    .container:hover {
+      box-shadow: 0 0 35px rgba(0, 136, 248, 0.7), 0 0 55px rgba(76, 175, 80, 0.6);
+    }
+    
+    h2 {
+      color: #00c6ff;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    fieldset {
+      border: 1px solid #0072ff;
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    legend {
+      color: #00c6ff;
+      font-weight: bold;
+      padding: 0 8px;
+    }
+    label {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.95rem;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border: none;
+      border-radius: 6px;
+      background: #2a2a2a;
+      color: #fff;
+    }
+    button {
+      margin-top: 15px;
+      padding: 12px;
+      background: linear-gradient(45deg, #00c6ff, #0072ff);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: linear-gradient(45deg, #0072ff, #00c6ff);
+    }
+    #result { margin-top: 20px; font-size: 18px; font-weight: bold; text-align: center; padding: 10px; border-radius: 8px; }
+    .success { color: #4caf50; background: rgba(76,175,80,0.15); }
+    .error { color: #ff5252; background: rgba(255,82,82,0.15); }
+  </style>
+</head>
+<body>
+<header><i class="fa-solid fa-building-columns"></i> Smart Loan Checker</header>
+
+<div class="container">
+  <h2>🏦 Gold Loan Eligibility</h2>
+
+  <form action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="8fdf7c37-f11e-48fc-bcf2-d5abf65ba573">
+
+    <fieldset>
+      <legend>Applicant KYC</legend>
+      <label>Name:</label><input id="name" name="Name" type="text" required>
+      <label>Age:</label><input id="age" name="Age" type="number" required>
+      <label>Address Proof:</label><input id="address" name="Address Proof" type="text" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>Gold Details</legend>
+      <label>Gold Weight (grams):</label><input id="weight" name="Gold Weight" type="number" required>
+      <label>Purity (%):</label><input id="purity" name="Gold Purity" type="number" required>
+      <label>Gold Value (₹):</label><input id="value" name="Gold Value" type="number" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>Loan Details</legend>
+      <label>Loan Amount Requested (₹):</label><input id="loan" name="Loan Amount" type="number" required>
+      <label>Credit Score:</label><input id="credit" name="Credit Score" type="number" required>
+      <label>Repayment Type:</label>
+      <select id="repayment" name="Repayment Type" required>
+        <option value="Bullet">Bullet</option>
+        <option value="EMI">EMI</option>
+        <option value="Flexible">Flexible</option>
+      </select>
+      <label>Tenure (Years):</label><input id="tenure" name="Tenure" type="number" required>
+    </fieldset>
+
+    <button type="button" py-click="check">Check Eligibility</button>
+    <button type="submit">Send to Bank</button>
+  </form>
+
+  <div id="result"></div>
+</div>
+
+<py-script>
+from js import document
+
+def check(event=None):
+    result = document.getElementById("result")
+    try:
+        name = document.getElementById("name").value
+        age = int(document.getElementById("age").value)
+        weight = int(document.getElementById("weight").value)
+        purity = int(document.getElementById("purity").value)
+        value = int(document.getElementById("value").value)
+        loan_amt = int(document.getElementById("loan").value)
+        credit = int(document.getElementById("credit").value)
+        tenure = float(document.getElementById("tenure").value)
+
+        # Eligibility Conditions
+        if age < 21 or age > 65:
+            result.innerHTML = "❌ Not Eligible: Age 21–65 yrs."
+            result.className="error"; return
+        if weight < 10 or weight > 2000:
+            result.innerHTML = "❌ Not Eligible: Gold 10g–2kg."
+            result.className="error"; return
+        if loan_amt < 25000 or loan_amt > 20000000:
+            result.innerHTML = "❌ Not Eligible: Loan ₹25k–₹2Cr."
+            result.className="error"; return
+        if loan_amt > value:
+            result.innerHTML = "❌ Not Eligible: Loan > Gold Value."
+            result.className="error"; return
+        if credit < 600 or credit > 900:
+            result.innerHTML = "❌ Not Eligible: Credit 600–900."
+            result.className="error"; return
+        if tenure < 0.5 or tenure > 5:
+            result.innerHTML = "❌ Not Eligible: Tenure 6 months–5 yrs."
+            result.className="error"; return
+
+        result.innerHTML = f"✅ Congratulations {name}, You are Eligible for Gold Loan!"
+        result.className="success"
+    except:
+        result.innerHTML = "⚠️ Please fill all fields correctly!"
+        result.className="error"
+</py-script>
+</body>
+</html>

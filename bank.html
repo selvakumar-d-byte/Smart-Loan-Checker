@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Select Your Bank - Smart Loan Checker</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url("eligibility background.png") no-repeat center center fixed;
+      background-size: cover;
+      color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      background: linear-gradient(135deg, #00c853, #1b5e20);
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.7);
+      text-shadow: 0 0 12px rgba(0,0,0,0.7), 0 0 15px rgba(0, 255, 128, 0.6);
+      border-bottom: 3px solid #00e676;
+      animation: slideDown 1s ease;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      animation: fadeIn 1s ease;
+    }
+
+    .container {
+      background: rgba(25, 25, 25, 0.9);
+      backdrop-filter: blur(14px);
+      padding: 40px 50px;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 255, 128, 0.15);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.85);
+      max-width: 650px;
+      width: 100%;
+      text-align: center;
+      animation: fadeIn 1.3s ease;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 25px;
+      background: linear-gradient(45deg, #00e676, #69f0ae);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+      text-shadow: 0 0 15px rgba(0, 230, 118, 0.6);
+    }
+
+    .section-title {
+      margin-top: 25px;
+      margin-bottom: 15px;
+      font-weight: 600;
+      font-size: 1.3rem;
+      background: linear-gradient(45deg, #64b5f6, #81c784);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: "";
+      display: block;
+      height: 3px;
+      width: 100%;
+      background: linear-gradient(90deg, #00e676, #69f0ae);
+      margin-top: 5px;
+      border-radius: 2px;
+      box-shadow: 0 0 10px rgba(0, 230, 118, 0.7);
+    }
+
+    .bank-btn {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: bold;
+      border: 2px solid transparent;
+      border-radius: 14px;
+      cursor: pointer;
+      background: linear-gradient(45deg, #1976d2, #43a047);
+      color: white;
+      text-decoration: none;
+      transition: all 0.35s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    }
+
+    .bank-btn:hover {
+      background: linear-gradient(45deg, #43a047, #1976d2);
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 0 0 20px rgba(0, 255, 128, 0.7);
+      border: 2px solid #00e676;
+    }
+
+    footer {
+      text-align: center;
+      padding: 18px;
+      font-size: 0.95rem;
+      color: #aaa;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.6);
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.5);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header><i class="fa-solid fa-building-columns"></i> Smart Loan Checker</header>
+
+  <div class="main">
+    <div class="container">
+      <h2><i class="fa-solid fa-university"></i> Choose Your Bank</h2>
+
+      <div class="section-title">Public Sector Banks</div>
+      <a href="loanlist.html" class="bank-btn">State Bank of India</a>
+      <a href="loanlist.html" class="bank-btn">Punjab National Bank</a>
+      <a href="loanlist.html" class="bank-btn">Bank of Baroda</a>
+      <a href="loanlist.html" class="bank-btn">Canara Bank</a>
+      <a href="loanlist.html" class="bank-btn">Union Bank of India</a>
+      <a href="loanlist.html" class="bank-btn">Bank of India</a>
+      <a href="loanlist.html" class="bank-btn">Indian Bank</a>
+      <a href="loanlist.html" class="bank-btn">Central Bank of India</a>
+      <a href="loanlist.html" class="bank-btn">UCO Bank</a>
+      <a href="loanlist.html" class="bank-btn">Indian Overseas Bank</a>
+      <a href="loanlist.html" class="bank-btn">Bank of Maharashtra</a>
+      <a href="loanlist.html" class="bank-btn">Punjab & Sind Bank</a>
+
+      <div class="section-title">Private Sector Banks</div>
+      <a href="loanlist.html" class="bank-btn">HDFC Bank</a>
+      <a href="loanlist.html" class="bank-btn">ICICI Bank</a>
+      <a href="loanlist.html" class="bank-btn">Axis Bank</a>
+      <a href="loanlist.html" class="bank-btn">Kotak Mahindra Bank</a>
+      <a href="loanlist.html" class="bank-btn">IndusInd Bank</a>
+      <a href="loanlist.html" class="bank-btn">Yes Bank</a>
+      <a href="loanlist.html" class="bank-btn">IDFC FIRST Bank</a>
+      <a href="loanlist.html" class="bank-btn">Federal Bank</a>
+      <a href="loanlist.html" class="bank-btn">South Indian Bank</a>
+      <a href="loanlist.html" class="bank-btn">RBL Bank</a>
+      <a href="loanlist.html" class="bank-btn">Bandhan Bank</a>
+      <a href="loanlist.html" class="bank-btn">Dhanlaxmi Bank</a>
+      <a href="loanlist.html" class="bank-btn">Karnataka Bank</a>
+      <a href="loanlist.html" class="bank-btn">City Union Bank</a>
+      <a href="loanlist.html" class="bank-btn">Tamilnad Mercantile Bank</a>
+      <a href="loanlist.html" class="bank-btn">Nainital Bank</a>
+      <a href="loanlist.html" class="bank-btn">CSB Bank</a>
+      <a href="loanlist.html" class="bank-btn">Jammu & Kashmir Bank</a>
+      <a href="loanlist.html" class="bank-btn">DBS Bank India</a>
+      <a href="loanlist.html" class="bank-btn">Karur Vysya Bank</a>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Smart Loan Checker | All Rights Reserved
+  </footer>
+</body>
+</html>

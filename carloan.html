@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Loan Checker - Car Loan</title>
+  <link rel="stylesheet" href="https://pyscript.net/releases/2025.8.1/core.css">
+  <script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+    <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      background: url("eligibility background.png") no-repeat center center fixed;
+      background-size: cover;
+      color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding-top: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: gray;
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      padding: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      z-index: 1000;
+    }
+    .container {
+      background: rgba(30,30,30,0.9);
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.8);
+      width: 420px;
+      max-width: 95%;
+      box-shadow: 0 0 25px rgba(0, 136, 248, 0.7), 0 0 45px rgba(46, 125, 50, 0.4);
+      transition: 0.4s ease;
+    }
+
+    .container:hover {
+      box-shadow: 0 0 35px rgba(0, 136, 248, 0.7), 0 0 55px rgba(76, 175, 80, 0.6);
+    }
+    
+    h2 {
+      color: #00c6ff;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    fieldset {
+      border: 1px solid #0072ff;
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    legend {
+      color: #00c6ff;
+      font-weight: bold;
+      padding: 0 8px;
+    }
+    label {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.95rem;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border: none;
+      border-radius: 6px;
+      background: #2a2a2a;
+      color: #fff;
+    }
+    button {
+      margin-top: 15px;
+      padding: 12px;
+      background: linear-gradient(45deg, #00c6ff, #0072ff);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: linear-gradient(45deg, #0072ff, #00c6ff);
+    }
+    #result { margin-top: 20px; font-size: 18px; font-weight: bold; text-align: center; padding: 10px; border-radius: 8px; }
+    .success { color: #4caf50; background: rgba(76,175,80,0.15); }
+    .error { color: #ff5252; background: rgba(255,82,82,0.15); }
+  </style>
+</head>
+<body>
+<header><i class="fa-solid fa-building-columns"></i> Smart Loan Checker</header>
+
+<div class="container">
+  <h2>🚗 Car Loan Eligibility</h2>
+
+  <form action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="8fdf7c37-f11e-48fc-bcf2-d5abf65ba573">
+
+    <fieldset>
+      <legend>Applicant Info</legend>
+      <label>Name:</label><input id="name" name="Name" type="text" required>
+      <label>Age:</label><input id="age" name="Age" type="number" required>
+      <label>Monthly Income:</label><input id="income" name="Income" type="number" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>Car Details</legend>
+      <label>Car Make & Model:</label><input id="model" name="Car Model" type="text" required>
+      <label>Car Price:</label><input id="price" name="Car Price" type="number" required>
+      <label>Dealer Quotation:</label><input id="dealer" name="Dealer" type="text" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>Loan Info</legend>
+      <label>Loan Amount Requested:</label><input id="loan" name="Loan Amount" type="number" required>
+      <label>Tenure (Years):</label><input id="tenure" name="Tenure" type="number" required>
+      <label>Credit Score:</label><input id="credit" name="Credit Score" type="number" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>Other Details</legend>
+      <label>Insurance (Yes/No):</label><input id="insurance" name="Insurance" type="text" required>
+      <label>Existing EMIs (Monthly):</label><input id="emi" name="EMIs" type="number" required>
+    </fieldset>
+
+    <button type="button" py-click="check">Check Eligibility</button>
+    <button type="submit">Send to Bank</button>
+  </form>
+
+  <h3 id="result"></h3>
+</div>
+
+<py-script>
+from js import document
+
+def check(event=None):
+    result = document.getElementById("result")
+    try:
+        name = document.getElementById("name").value
+        age = int(document.getElementById("age").value)
+        income = int(document.getElementById("income").value)
+        model = document.getElementById("model").value
+        price = int(document.getElementById("price").value)
+        dealer = document.getElementById("dealer").value
+        loan_amt = int(document.getElementById("loan").value)
+        tenure = int(document.getElementById("tenure").value)
+        credit = int(document.getElementById("credit").value)
+        insurance = document.getElementById("insurance").value.lower()
+        emi = int(document.getElementById("emi").value)
+
+        # Eligibility Conditions
+        if age < 21 or age > 60:
+            result.innerHTML = "❌ Not Eligible: Age 21–60."
+            result.className="error"; return
+        if loan_amt < 100000 or loan_amt > 5000000:
+            result.innerHTML = "❌ Not Eligible: Loan ₹1L–₹50L."
+            result.className="error"; return
+        if income < 20000:
+            result.innerHTML = "❌ Not Eligible: Monthly income ₹20k+."
+            result.className="error"; return
+        if credit < 650 or credit > 900:
+            result.innerHTML = "❌ Not Eligible: Credit Score 650–900."
+            result.className="error"; return
+        if tenure < 1 or tenure > 7:
+            result.innerHTML = "❌ Not Eligible: Tenure 1–7 years."
+            result.className="error"; return
+        if insurance != "yes":
+            result.innerHTML = "❌ Not Eligible: Insurance required."
+            result.className="error"; return
+        if emi > 30000:
+            result.innerHTML = "❌ Not Eligible: Existing EMIs ≤ ₹30k."
+            result.className="error"; return
+
+        result.innerHTML = f"✅ Congratulations {name}! You are Eligible for Car Loan on {model}."
+        result.className="success"
+    except:
+        result.innerHTML = "⚠️ Please fill all fields correctly!"
+        result.className="error"
+</py-script>
+</body>
+</html>

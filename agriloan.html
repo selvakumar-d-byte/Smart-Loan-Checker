@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Loan Checker - Agriculture Loan Eligibility</title>
+  <link rel="stylesheet" href="https://pyscript.net/releases/2025.8.1/core.css">
+  <script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+    <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    body {
+      background: url("eligibility background.png") no-repeat center center fixed;
+      background-size: cover;
+      color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding-top: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(45deg, #2e7d32, #4caf50);
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      padding: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      z-index: 1000;
+    }
+    .container {
+  background: rgba(30,30,30,0.9);
+  padding: 25px;
+  border-radius: 14px;
+  /* 🟢 Green glow shadow */
+  box-shadow: 0 0 25px rgba(76, 175, 80, 0.7), 0 0 45px rgba(46, 125, 50, 0.4);
+  width: 420px;
+  max-width: 95%;
+  transition: 0.4s ease;
+}
+
+/* Hover effect for extra glow */
+.container:hover {
+  box-shadow: 0 0 35px rgba(129, 199, 132, 0.9), 0 0 55px rgba(76, 175, 80, 0.6);
+}
+
+    h2 {
+      color: #4caf50;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    fieldset {
+      border: 1px solid #4caf50;
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    legend {
+      color: #4caf50;
+      font-weight: bold;
+      padding: 0 8px;
+    }
+    label {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.95rem;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border: none;
+      border-radius: 6px;
+      background: #2a2a2a;
+      color: #fff;
+    }
+    button {
+      margin-top: 15px;
+      padding: 12px;
+      background: linear-gradient(45deg, #4caf50, #2e7d32);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: linear-gradient(45deg, #2e7d32, #4caf50);
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .success { color: #4caf50; background: rgba(76,175,80,0.15); }
+    .error { color: #ff5252; background: rgba(255,82,82,0.15); }
+  </style>
+</head>
+<body>
+<header><i class="fa-solid fa-building-columns"></i> Smart Loan Checker</header>
+
+<div class="container">
+  <h2>🌾 Agriculture Loan Eligibility</h2>
+
+  <form action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="8fdf7c37-f11e-48fc-bcf2-d5abf65ba573">
+
+    <fieldset>
+      <legend>Applicant Details</legend>
+      <label>Name:</label>
+      <input id="name" name="Name" type="text" required>
+
+      <label>Age:</label>
+      <input id="age" name="Age" type="number" required>
+
+      <label>Aadhaar No:</label>
+      <input id="aadhaar" name="Aadhaar No" type="text" required>
+
+      <label>Address:</label>
+      <input id="address" name="Address" type="text" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>Land & Crop Details</legend>
+      <label>Land Ownership Proof Available?</label>
+      <select id="land_proof" name="Land Proof" required>
+        <option value="">--Select--</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+
+      <label>Crop Type:</label>
+      <input id="crop" name="Crop Type" type="text" required>
+
+      <label>Season:</label>
+      <input id="season" name="Season" type="text" required>
+
+      <label>Govt Subsidy Scheme Applicable?</label>
+      <select id="subsidy" name="Subsidy" required>
+        <option value="">--Select--</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+
+      <label>Income from Farming (Last Year ₹):</label>
+      <input id="income" name="Income" type="number" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>Loan Details</legend>
+      <label>Loan Purpose:</label>
+      <select id="purpose" name="Loan Purpose" required>
+        <option value="">--Select--</option>
+        <option value="Seeds">Seeds</option>
+        <option value="Fertilizers">Fertilizers</option>
+        <option value="Irrigation">Irrigation Equipment</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label>Loan Amount Requested (₹):</label>
+      <input id="loan" name="Loan Amount" type="number" required>
+
+      <label>Tenure (Years):</label>
+      <input id="tenure" name="Tenure" type="number" required>
+    </fieldset>
+
+    <button type="button" py-click="check">Check Eligibility</button>
+    <button type="submit">Send to Bank</button>
+  </form>
+
+  <h3 id="result"></h3>
+</div>
+
+<py-script>
+from js import document
+
+def check(event=None):
+    result = document.getElementById("result")
+    try:
+        name = document.getElementById("name").value
+        age = int(document.getElementById("age").value)
+        loan_amt = int(document.getElementById("loan").value)
+        tenure = int(document.getElementById("tenure").value)
+        land_proof = document.getElementById("land_proof").value
+
+        if age < 18 or age > 65:
+            result.innerHTML = "❌ Not Eligible: Age must be 18–65 yrs."
+            result.className = "error"
+            return
+        if loan_amt < 50000 or loan_amt > 2500000:
+            result.innerHTML = "❌ Not Eligible: Loan must be ₹50k – ₹25L."
+            result.className = "error"
+            return
+        if tenure < 1 or tenure > 15:
+            result.innerHTML = "❌ Not Eligible: Tenure must be 1–15 yrs."
+            result.className = "error"
+            return
+        if land_proof == "No":
+            result.innerHTML = "❌ Not Eligible: Land ownership proof required."
+            result.className = "error"
+            return
+
+        result.innerHTML = f"✅ Congratulations {name}, You are Eligible for Agriculture Loan!"
+        result.className = "success"
+    except:
+        result.innerHTML = "⚠️ Please fill all fields correctly!"
+        result.className = "error"
+</py-script>
+</body>
+</html>

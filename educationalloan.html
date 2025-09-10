@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Loan Checker - Education Loan</title>
+  <link rel="stylesheet" href="https://pyscript.net/releases/2025.8.1/core.css">
+  <script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+    <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      background: url("eligibility background.png") no-repeat center center fixed;
+      background-size: cover;
+      color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding-top: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: gray;
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      padding: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      z-index: 1000;
+    }
+    .container {
+      background: rgba(30,30,30,0.9);
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.8);
+      width: 420px;
+      max-width: 95%;
+      box-shadow: 0 0 25px rgba(0, 136, 248, 0.7), 0 0 45px rgba(46, 125, 50, 0.4);
+      transition: 0.4s ease;
+    }
+
+    .container:hover {
+      box-shadow: 0 0 35px rgba(0, 136, 248, 0.7), 0 0 55px rgba(76, 175, 80, 0.6);
+    }
+    
+    h2 {
+      color: #00c6ff;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    fieldset {
+      border: 1px solid #0072ff;
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    legend {
+      color: #00c6ff;
+      font-weight: bold;
+      padding: 0 8px;
+    }
+    label {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.95rem;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border: none;
+      border-radius: 6px;
+      background: #2a2a2a;
+      color: #fff;
+    }
+    button {
+      margin-top: 15px;
+      padding: 12px;
+      background: linear-gradient(45deg, #00c6ff, #0072ff);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: linear-gradient(45deg, #0072ff, #00c6ff);
+    }
+    #result { margin-top: 20px; font-size: 18px; font-weight: bold; text-align: center; padding: 10px; border-radius: 8px; }
+    .success { color: #4caf50; background: rgba(76,175,80,0.15); }
+    .error { color: #ff5252; background: rgba(255,82,82,0.15); }
+  </style>
+</head>
+<body>
+<header><i class="fa-solid fa-building-columns"></i> Smart Loan Checker</header>
+
+<div class="container">
+  <h2>🎓 Education Loan Eligibility</h2>
+
+  <form action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="8fdf7c37-f11e-48fc-bcf2-d5abf65ba573">
+
+    <fieldset>
+      <legend>Student Details</legend>
+      <label>Name:</label><input id="name" name="Name" type="text" required>
+      <label>Age:</label><input id="age" name="Age" type="number" required>
+      <label>Marks (%):</label><input id="marks" name="Marks" type="number" required>
+      <label>Admission Letter (Yes/No):</label><input id="admission" name="Admission" type="text" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>Course & College</legend>
+      <label>Course Name:</label><input id="course" name="Course Name" type="text" required>
+      <label>Course Duration (Years):</label><input id="duration" name="Course Duration" type="number" required>
+      <label>University (Domestic/Abroad):</label><input id="university" name="University" type="text" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>Financial Details</legend>
+      <label>Estimated Fees & Living Cost:</label><input id="fees" name="Fees" type="number" required>
+      <label>Parent/Guardian Income (Monthly):</label><input id="income" name="Parent Income" type="number" required>
+      <label>Parent/Guardian Credit Score:</label><input id="credit" name="Credit Score" type="number" required>
+      <label>Collateral Provided (Yes/No):</label><input id="collateral" name="Collateral" type="text" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>Loan Details</legend>
+      <label>Loan Amount Requested:</label><input id="loan" name="Loan Amount" type="number" required>
+      <label>Tenure (Years):</label><input id="tenure" name="Tenure" type="number" required>
+    </fieldset>
+
+    <button type="button" py-click="check">Check Eligibility</button>
+    <button type="submit">Send to Bank</button>
+  </form>
+
+  <h3 id="result"></h3>
+</div>
+
+<py-script>
+from js import document
+
+def check(event=None):
+    result = document.getElementById("result")
+    try:
+        name = document.getElementById("name").value
+        age = int(document.getElementById("age").value)
+        marks = int(document.getElementById("marks").value)
+        admission = document.getElementById("admission").value.lower()
+        income = int(document.getElementById("income").value)
+        credit = int(document.getElementById("credit").value)
+        loan_amt = int(document.getElementById("loan").value)
+        tenure = int(document.getElementById("tenure").value)
+        collateral = document.getElementById("collateral").value.lower()
+
+        # Eligibility conditions
+        if age < 18 or age > 35:
+            result.innerHTML = "❌ Not Eligible: Age must be 18–35."
+            result.className="error"; return
+        if marks < 50:
+            result.innerHTML = "❌ Not Eligible: Minimum 50% marks required."
+            result.className="error"; return
+        if admission != "yes":
+            result.innerHTML = "❌ Not Eligible: Admission proof required."
+            result.className="error"; return
+        if loan_amt < 100000 or loan_amt > 5000000:
+            result.innerHTML = "❌ Not Eligible: Loan ₹1L–₹50L."
+            result.className="error"; return
+        if income < 15000 or income > 30000:
+            result.innerHTML = "❌ Not Eligible: Parent income ₹15k–₹30k."
+            result.className="error"; return
+        if credit < 650 or credit > 900:
+            result.innerHTML = "❌ Not Eligible: Credit Score 650–900."
+            result.className="error"; return
+        if tenure > 15:
+            result.innerHTML = "❌ Not Eligible: Tenure ≤ 15 years."
+            result.className="error"; return
+        if loan_amt > 2000000 and collateral != "yes":
+            result.innerHTML = "❌ Not Eligible: Collateral required for > ₹20L."
+            result.className="error"; return
+
+        # Eligible
+        result.innerHTML = f"✅ Congratulations {name}, You are Eligible for Education Loan!"
+        result.className="success"
+    except:
+        result.innerHTML = "⚠️ Please fill all fields correctly!"
+        result.className="error"
+</py-script>
+</body>
+</html>
